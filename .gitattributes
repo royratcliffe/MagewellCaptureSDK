@@ -1,0 +1,5 @@
+# Normalise header files to use LF line endings.
+*.h text eol=lf
+
+# No normalisation for archive files.
+*.a binary
