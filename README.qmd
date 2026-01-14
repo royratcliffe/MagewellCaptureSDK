@@ -1,4 +1,14 @@
 
+# Introduction
+
+Note, there are two parts to the Magewell Capture SDK for Linux: the
+user-space shared library, and the kernel-space driver module; the
+former works but remains non-functional without the latter. This
+document covers only the user-space shared library. The kernel-space
+driver module is covered in a separate document.
+
+## Building the Shared Library
+
 ### Linkage requirements
 
 The shared library needs to linking with the following system libraries:
