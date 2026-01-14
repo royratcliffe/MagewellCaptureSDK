@@ -32,6 +32,12 @@ set_target_properties(MWCapture PROPERTIES
     INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/Include/LibMWCapture"
 )
 
+# Installation rules.
+# Install header files.
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/inc/
+    DESTINATION include
+    FILES_MATCHING PATTERN "*.h"
+)
 install(TARGETS MagewellCapture
     EXPORT MagewellCaptureConfig
     ARCHIVE DESTINATION lib
