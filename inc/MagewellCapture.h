@@ -17,7 +17,9 @@ namespace magewell_capture {
 uint32_t get_version();
 
 //! Initialises a Magewell Capture instance.
-//! Invoke this at the start of the program.
+//! Invoke this at the start of the program. It works idempotently; calling it
+//! multiple times has no additional effect.
+//! Throws std::runtime_error if initialisation fails.
 void init_instance();
 
 } // namespace magewell_capture
