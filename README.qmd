@@ -1,0 +1,25 @@
+
+### Linkage requirements
+
+The shared library needs to linking with the following system libraries:
+
+```
+pthread
+udev
+asound
+v4l2
+```
+
+This means that the build host needs to have the development packages
+for these libraries installed. Likely, most of these are already
+installed on most systems---the Linux kernel and GNU C Library depend on
+them, i.e. the POSIX thread library and the `udev` user-space device
+library. On a Debian-based system, you can install them with:
+
+```bash
+sudo apt-get install libpthread-stubs0-dev libudev-dev libasound2-dev libv4l-dev
+```
+
+There is no need to link against the `dl` library on Debian-based
+systems; it is included by default. It may be required on other Linux
+distributions.
