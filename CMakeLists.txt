@@ -32,6 +32,8 @@ set_target_properties(MWCapture PROPERTIES
     INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/Include/LibMWCapture"
 )
 
+# Build a test driver from the test sources.
+enable_testing()
 create_test_sourcelist(magewell_capture_tests
     test_driver.cpp
     test/get_version.cpp
