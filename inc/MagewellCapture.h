@@ -8,6 +8,8 @@
 // for standard C integer types
 #include <cstdint>
 
+#include <ranges>
+
 namespace magewell_capture {
 
 //! Returns the version of the Magewell Capture SDK as a 32-bit integer.
@@ -31,6 +33,32 @@ void exit_instance();
 //! Refreshes the device list.
 //! Call this function when devices are plugged in or unplugged.
 void refresh_device();
+
+//! Opaque handle to a capture channel.
+//! A simple integer identifies the channel.
+class channel {
+  const int index_;
+
+public:
+  explicit channel(int index) : index_(index) {}
+  int index() const { return index_; }
+
+  //! Returns the total number of channels.
+  //! There are no channels if no devices are connected.
+  static int count();
+
+  //! Returns a channel by its index.
+  //! The index must be in the range [0, count()).
+  static channel at(int index) { return channel(index); }
+
+  //! Returns a view of all channel indices.
+  static auto range() { return std::views::iota(0, count()); };
+
+  //! Returns a view of all channels.
+  static auto iterator() {
+    return range() | std::views::transform([](int i) { return channel(i); });
+  }
+};
 
 } // namespace magewell_capture
 

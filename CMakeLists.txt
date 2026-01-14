@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.22)
 project(MagewellCaptureSDK)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 add_library(MagewellCapture SHARED
     ${CMAKE_SOURCE_DIR}/inc/MagewellCapture.h
     ${CMAKE_SOURCE_DIR}/src/MagewellCapture.cpp

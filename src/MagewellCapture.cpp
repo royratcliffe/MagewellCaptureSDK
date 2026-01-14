@@ -38,6 +38,8 @@ void magewell_capture::refresh_device() {
   throw_if_not_succeeded(MWRefreshDevice(), "MWRefreshDevice");
 }
 
+int magewell_capture::channel::count() { return MWGetChannelCount(); }
+
 static void throw_if_not_succeeded(MW_RESULT result,
                                    const char *what_function) {
   if (result != MW_SUCCEEDED)
