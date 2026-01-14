@@ -7,6 +7,25 @@
 
 using namespace magewell_capture;
 
+//! Throws std::runtime_error if result is not MW_SUCCEEDED.
+//! The error message includes the function name passed as what_function.
+//! \param result The MW_RESULT value to check.
+//! \param what_function The name of the function that produced the result.
+static void throw_if_not_succeeded(MW_RESULT result,
+                                   const char *what_function) {
+  if (result != MW_SUCCEEDED)
+    switch (result) {
+    case MW_FAILED:
+      throw std::runtime_error(std::string(what_function) + " failed");
+    case MW_ENODATA:
+      throw std::runtime_error(std::string(what_function) + " no data");
+    case MW_INVALID_PARAMS:
+      throw std::runtime_error(std::string(what_function) + " invalid");
+    default:
+      throw std::runtime_error(std::string(what_function) + " unknown error");
+    }
+}
+
 uint32_t magewell_capture::get_version() {
   BYTE major = 0, minor = 0;
   WORD build = 0;
@@ -28,6 +47,5 @@ void magewell_capture::exit_instance() {
 }
 
 void magewell_capture::refresh_device() {
-  if (MWRefreshDevice() == FALSE)
-    throw std::runtime_error("MWRefreshDevice failed");
+  throw_if_not_succeeded(MWRefreshDevice(), "MWRefreshDevice");
 }
