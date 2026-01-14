@@ -41,10 +41,12 @@ enable_testing()
 create_test_sourcelist(magewell_capture_tests
     test_driver.cpp
     test/get_version.cpp
+    test/init_instance.cpp
 )
 add_executable(test_driver ${magewell_capture_tests})
 target_link_libraries(test_driver PRIVATE MagewellCapture)
 add_test(NAME get_version COMMAND test_driver test/get_version)
+add_test(NAME init_instance COMMAND test_driver test/init_instance)
 
 # Installation rules.
 # Install header files.

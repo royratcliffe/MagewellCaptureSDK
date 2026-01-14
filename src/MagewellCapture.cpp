@@ -19,5 +19,6 @@ uint32_t magewell_capture::get_version() {
 }
 
 void magewell_capture::init_instance() {
-  if (MWCaptureInitInstance() == FALSE) throw std::runtime_error("MWCaptureInitInstance failed");
+  if (MWCaptureInitInstance() == FALSE)
+    throw std::runtime_error("MWCaptureInitInstance failed");
 }

@@ -16,6 +16,8 @@ namespace magewell_capture {
 //! - Bits 15-0 : Build number
 uint32_t get_version();
 
+//! Initialises a Magewell Capture instance.
+//! Invoke this at the start of the program.
 void init_instance();
 
 } // namespace magewell_capture
