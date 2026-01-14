@@ -18,5 +18,6 @@ int test_get_version(int argc, char *argv[]) {
 
   // Note that the build number 0x05eb is 1515 in decimal.
   assert(version == 0x030305ebU);
+
   return EXIT_SUCCESS;
 }

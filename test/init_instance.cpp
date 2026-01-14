@@ -10,5 +10,6 @@ int test_init_instance(int argc, char *argv[]) {
   magewell_capture::init_instance();
   magewell_capture::init_instance();
   magewell_capture::init_instance();
+
   return EXIT_SUCCESS;
 }
