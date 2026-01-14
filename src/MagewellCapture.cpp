@@ -1,3 +1,6 @@
+//! \file MagewellCapture.cpp
+//! \brief Implementation of Magewell Capture SDK C++ wrapper functions.
+
 #include <MagewellCapture.h>
 
 #include "MWCapture.h"

@@ -1,3 +1,6 @@
+//! \file MagewellCapture.h
+//! \brief Declaration of Magewell Capture SDK C++ wrapper functions.
+
 #ifndef MAGEWELL_CAPTURE_H
 #define MAGEWELL_CAPTURE_H
 #ifdef __cplusplus
