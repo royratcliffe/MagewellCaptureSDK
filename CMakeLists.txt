@@ -47,6 +47,7 @@ create_test_sourcelist(magewell_capture_tests
     test/init_instance.cpp
     test/exit_instance.cpp
     test/refresh_device.cpp
+    test/channel_iterator.cpp
 )
 add_executable(test_driver ${magewell_capture_tests})
 target_link_libraries(test_driver PRIVATE MagewellCapture)
@@ -54,6 +55,7 @@ add_test(NAME get_version COMMAND test_driver test/get_version)
 add_test(NAME init_instance COMMAND test_driver test/init_instance)
 add_test(NAME exit_instance COMMAND test_driver test/exit_instance)
 add_test(NAME refresh_device COMMAND test_driver test/refresh_device)
+add_test(NAME channel_iterator COMMAND test_driver test/channel_iterator)
 
 # Installation rules.
 # Install header files.
