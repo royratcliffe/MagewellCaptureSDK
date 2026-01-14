@@ -45,14 +45,14 @@ public:
 
   //! Returns the total number of channels.
   //! There are no channels if no devices are connected.
-  static int count();
+  static int get_count();
 
   //! Returns a channel by its index.
   //! The index must be in the range [0, count()).
   static channel at(int index) { return channel(index); }
 
   //! Returns a view of all channel indices.
-  static auto range() { return std::views::iota(0, count()); };
+  static auto range() { return std::views::iota(0, get_count()); };
 
   //! Returns a view of all channels.
   static auto iterator() {

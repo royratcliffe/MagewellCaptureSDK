@@ -10,14 +10,14 @@ int test_channel_iterator(int argc, char *argv[]) {
 
   magewell_capture::init_instance();
   magewell_capture::refresh_device();
-  std::cout << "Number of channels: " << magewell_capture::channel::count()
+  std::cout << "Number of channels: " << magewell_capture::channel::get_count()
             << std::endl;
-  assert(magewell_capture::channel::count() >= 0);
+  assert(magewell_capture::channel::get_count() >= 0);
 
   for (auto &&channel : magewell_capture::channel::iterator()) {
     std::cout << "Channel index: " << channel.index() << std::endl;
     assert(channel.index() >= 0);
-    assert(channel.index() < magewell_capture::channel::count());
+    assert(channel.index() < magewell_capture::channel::get_count());
 
     // Get and print channel information.
     auto info = channel.get_info();

@@ -38,7 +38,7 @@ void magewell_capture::refresh_device() {
   throw_if_not_succeeded(MWRefreshDevice(), "MWRefreshDevice");
 }
 
-int magewell_capture::channel::count() { return MWGetChannelCount(); }
+int magewell_capture::channel::get_count() { return MWGetChannelCount(); }
 
 magewell_capture::channel::info magewell_capture::channel::get_info() const {
   // Rely on RVO, return-value optimisation, to avoid copy.
