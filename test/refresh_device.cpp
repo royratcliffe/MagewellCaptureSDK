@@ -7,6 +7,8 @@ int test_refresh_device(int argc, char *argv[]) {
   (void)argv;
 
   // Call refresh_device to verify it works without error.
+  // This works, strangely, even without instance initialisation.
+  // Does the SDK do implicit initialisation here?
   magewell_capture::refresh_device();
 
   return EXIT_SUCCESS;
