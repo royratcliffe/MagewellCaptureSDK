@@ -11,20 +11,7 @@ using namespace magewell_capture;
 //! The error message includes the function name passed as what_function.
 //! \param result The MW_RESULT value to check.
 //! \param what_function The name of the function that produced the result.
-static void throw_if_not_succeeded(MW_RESULT result,
-                                   const char *what_function) {
-  if (result != MW_SUCCEEDED)
-    switch (result) {
-    case MW_FAILED:
-      throw std::runtime_error(std::string(what_function) + " failed");
-    case MW_ENODATA:
-      throw std::runtime_error(std::string(what_function) + " no data");
-    case MW_INVALID_PARAMS:
-      throw std::runtime_error(std::string(what_function) + " invalid");
-    default:
-      throw std::runtime_error(std::string(what_function) + " unknown error");
-    }
-}
+static void throw_if_not_succeeded(MW_RESULT result, const char *what_function);
 
 uint32_t magewell_capture::get_version() {
   BYTE major = 0, minor = 0;
@@ -48,4 +35,22 @@ void magewell_capture::exit_instance() {
 
 void magewell_capture::refresh_device() {
   throw_if_not_succeeded(MWRefreshDevice(), "MWRefreshDevice");
+}
+
+static void throw_if_not_succeeded(MW_RESULT result,
+                                   const char *what_function) {
+  if (result != MW_SUCCEEDED)
+    switch (result) {
+    case MW_FAILED:
+      throw std::runtime_error(std::string(what_function) + " failed");
+    case MW_ENODATA:
+      throw std::runtime_error(std::string(what_function) + " no data");
+    case MW_INVALID_PARAMS:
+      throw std::runtime_error(std::string(what_function) + " invalid");
+    default:
+      // Throw unknown errors for other codes though logically there
+      // should be no more error types since the result enumeration only
+      // defines the preceding ones. But be defensive.
+      throw std::runtime_error(std::string(what_function) + " unknown error");
+    }
 }
