@@ -16,6 +16,8 @@ namespace magewell_capture {
 //! - Bits 15-0 : Build number
 uint32_t get_version();
 
+void init_instance();
+
 } // namespace magewell_capture
 
 #ifdef __cplusplus
