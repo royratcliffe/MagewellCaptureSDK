@@ -11,6 +11,10 @@ target_include_directories(MagewellCapture PUBLIC
 )
 target_link_libraries(MagewellCapture PRIVATE
     MWCapture
+    pthread
+    udev
+    asound
+    v4l2
 )
 
 # Import the MWCapture static library. Its location depends on
