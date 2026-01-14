@@ -22,6 +22,11 @@ uint32_t get_version();
 //! Throws std::runtime_error if initialisation fails.
 void init_instance();
 
+//! Cleans up the Magewell Capture instance.
+//! Invoke this at the end of the program. Like init_instance, it works
+//! idempotently; calling it multiple times has no additional effect.
+void exit_instance();
+
 } // namespace magewell_capture
 
 #ifdef __cplusplus

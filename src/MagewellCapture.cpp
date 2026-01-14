@@ -22,3 +22,7 @@ void magewell_capture::init_instance() {
   if (MWCaptureInitInstance() == FALSE)
     throw std::runtime_error("MWCaptureInitInstance failed");
 }
+
+void magewell_capture::exit_instance() {
+  MWCaptureExitInstance();
+}
