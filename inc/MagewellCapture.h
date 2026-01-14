@@ -1,8 +1,6 @@
 #ifndef MAGEWELL_CAPTURE_H
 #define MAGEWELL_CAPTURE_H
 #ifdef __cplusplus
-extern "C" {
-#endif
 
 // for standard C integer types
 #include <cstdint>
@@ -33,7 +31,5 @@ void refresh_device();
 
 } // namespace magewell_capture
 
-#ifdef __cplusplus
-}
-#endif
+#endif // __cplusplus
 #endif // MAGEWELL_CAPTURE_H
