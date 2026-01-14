@@ -58,6 +58,27 @@ public:
   static auto iterator() {
     return range() | std::views::transform([](int i) { return channel(i); });
   }
+
+  //! Information about a capture channel.
+  //! Corresponds to MWCAP_CHANNEL_INFO.
+  struct info {
+    uint16_t family_id;
+    uint16_t product_id;
+    uint8_t hardware_version;
+    uint8_t firmware_id;
+    uint32_t firmware_version;
+    uint32_t driver_version;
+    std::string family_name;
+    std::string product_name;
+    std::string firmware_name;
+    std::string board_serial_no;
+    uint8_t board_index;
+    uint8_t channel_index;
+  };
+
+  //! Gets information about the channel.
+  //! Throws std::runtime_error on failure.
+  info get_info() const;
 };
 
 } // namespace magewell_capture

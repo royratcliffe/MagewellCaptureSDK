@@ -40,6 +40,29 @@ void magewell_capture::refresh_device() {
 
 int magewell_capture::channel::count() { return MWGetChannelCount(); }
 
+magewell_capture::channel::info magewell_capture::channel::get_info() const {
+  // Rely on RVO, return-value optimisation, to avoid copy.
+  info info;
+  MWCAP_CHANNEL_INFO c_info;
+  throw_if_not_succeeded(MWGetChannelInfoByIndex(index_, &c_info),
+                         "MWGetChannelInfoByIndex");
+  // Fill in the fields of info from c_info.
+  // Assign string fields directly; they are null-terminated.
+  info.family_id = c_info.wFamilyID;
+  info.product_id = c_info.wProductID;
+  info.hardware_version = c_info.chHardwareVersion;
+  info.firmware_id = c_info.byFirmwareID;
+  info.firmware_version = c_info.dwFirmwareVersion;
+  info.driver_version = c_info.dwDriverVersion;
+  info.family_name = c_info.szFamilyName;
+  info.product_name = c_info.szProductName;
+  info.firmware_name = c_info.szFirmwareName;
+  info.board_serial_no = c_info.szBoardSerialNo;
+  info.board_index = c_info.byBoardIndex;
+  info.channel_index = c_info.byChannelIndex;
+  return info;
+}
+
 static void throw_if_not_succeeded(MW_RESULT result,
                                    const char *what_function) {
   if (result != MW_SUCCEEDED)
