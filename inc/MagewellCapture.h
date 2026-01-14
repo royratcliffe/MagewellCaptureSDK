@@ -27,6 +27,10 @@ void init_instance();
 //! idempotently; calling it multiple times has no additional effect.
 void exit_instance();
 
+//! Refreshes the device list.
+//! Call this function when devices are plugged in or unplugged.
+void refresh_device();
+
 } // namespace magewell_capture
 
 #ifdef __cplusplus

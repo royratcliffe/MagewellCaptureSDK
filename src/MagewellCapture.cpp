@@ -26,3 +26,8 @@ void magewell_capture::init_instance() {
 void magewell_capture::exit_instance() {
   MWCaptureExitInstance();
 }
+
+void magewell_capture::refresh_device() {
+  if (MWRefreshDevice() == FALSE)
+    throw std::runtime_error("MWRefreshDevice failed");
+}
