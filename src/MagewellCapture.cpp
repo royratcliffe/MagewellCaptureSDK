@@ -1,0 +1,15 @@
+#include <MagewellCapture.h>
+
+#include "MWCapture.h"
+#include "MWEcoCapture.h"
+
+using namespace magewell_capture;
+
+uint32_t magewell_capture::get_version() {
+  BYTE major = 0, minor = 0;
+  WORD build = 0;
+  // At version 3.3.1
+  MWGetVersion(&major, &minor, &build);
+  return (static_cast<uint32_t>(major) << 24) |
+         (static_cast<uint32_t>(minor) << 16) | static_cast<uint32_t>(build);
+}
