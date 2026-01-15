@@ -22,6 +22,8 @@ int test_open_channel(int argc, char *argv[]) {
     auto opened = channel.open();
     cout << "  Input source scan: " << opened.get_input_source_scan() << endl;
 
+    // Get information about the opened channel.
+    // This time get the information from the opened channel handle.
     auto info = opened.get_info();
     cout << "  Opened channel info:" << endl;
     cout << "    Family Name: " << info.family_name << endl;
@@ -34,6 +36,8 @@ int test_open_channel(int argc, char *argv[]) {
     cout << "    Firmware ID: " << static_cast<int>(info.firmware_id) << endl;
     cout << "    Firmware Version: " << hex << info.firmware_version << dec << endl;
     cout << "    Driver Version: " << hex << info.driver_version << dec << endl;
+    cout << "    Board Index: " << static_cast<int>(info.board_index) << endl;
+    cout << "    Channel Index: " << static_cast<int>(info.channel_index) << endl;
 
     // C++ automatically closes the channel when 'opened' channel goes out of scope.
   }
