@@ -14,7 +14,7 @@ using namespace magewell_capture;
 //! The error message includes the function name passed as what_function.
 //! \param result The MW_RESULT value to check.
 //! \param what_function The name of the function that produced the result.
-static void throw_if_not_succeeded(MW_RESULT result, const char *what_function);
+static void handle_result(MW_RESULT result, const char *what_function);
 
 //! Copies fields of magewell_capture::channel::info from MWCAP_CHANNEL_INFO.
 //! \param lhs The C++ info structure to fill in.
@@ -40,7 +40,7 @@ void magewell_capture::init_instance() {
 
 void magewell_capture::exit_instance() { MWCaptureExitInstance(); }
 
-void magewell_capture::refresh_device() { throw_if_not_succeeded(MWRefreshDevice(), "MWRefreshDevice"); }
+void magewell_capture::refresh_device() { handle_result(MWRefreshDevice(), "MWRefreshDevice"); }
 
 int magewell_capture::channel::get_count() { return MWGetChannelCount(); }
 
@@ -48,7 +48,7 @@ magewell_capture::channel::info magewell_capture::channel::get_info() const {
   // Rely on RVO, return-value optimisation, to avoid copy.
   info info;
   MWCAP_CHANNEL_INFO info_;
-  throw_if_not_succeeded(MWGetChannelInfoByIndex(index_, &info_), "MWGetChannelInfoByIndex");
+  handle_result(MWGetChannelInfoByIndex(index_, &info_), "MWGetChannelInfoByIndex");
   // Fill in the fields of info from c_info.
   // Assign string fields directly; they are null-terminated.
   copy(info, info_);
@@ -60,7 +60,7 @@ std::string magewell_capture::channel::get_device_path() const {
   // documentation use 128 bytes. Assume that Magewell correctly null terminates
   // the path.
   char device_path[BUFSIZ];
-  throw_if_not_succeeded(MWGetDevicePath(index_, device_path), "MWGetDevicePath");
+  handle_result(MWGetDevicePath(index_, device_path), "MWGetDevicePath");
   return std::string(device_path);
 }
 
@@ -87,13 +87,13 @@ magewell_capture::channel::opened::~opened() {
 magewell_capture::channel::info magewell_capture::channel::opened::get_info() const {
   // Get the channel information by handle.
   MWCAP_CHANNEL_INFO info_;
-  throw_if_not_succeeded(MWGetChannelInfo(static_cast<HCHANNEL>(handle_), &info_), "MWGetChannelInfo");
+  handle_result(MWGetChannelInfo(static_cast<HCHANNEL>(handle_), &info_), "MWGetChannelInfo");
   info info;
   copy(info, info_);
   return info;
 }
 
-static void throw_if_not_succeeded(MW_RESULT result, const char *what_function) {
+static void handle_result(MW_RESULT result, const char *what_function) {
   if (result != MW_SUCCEEDED)
     switch (result) {
     case MW_FAILED:
