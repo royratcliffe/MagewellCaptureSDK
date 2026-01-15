@@ -16,6 +16,11 @@ using namespace magewell_capture;
 //! \param what_function The name of the function that produced the result.
 static void throw_if_not_succeeded(MW_RESULT result, const char *what_function);
 
+//! Assigns fields of magewell_capture::channel::info from MWCAP_CHANNEL_INFO.
+//! \param lhs The C++ info structure to fill in.
+//! \param rhs The C structure to read from.
+static void assign(magewell_capture::channel::info &lhs, const MWCAP_CHANNEL_INFO &rhs);
+
 uint32_t magewell_capture::get_version() {
   BYTE major = 0, minor = 0;
   WORD build = 0;
@@ -38,21 +43,6 @@ void magewell_capture::exit_instance() { MWCaptureExitInstance(); }
 void magewell_capture::refresh_device() { throw_if_not_succeeded(MWRefreshDevice(), "MWRefreshDevice"); }
 
 int magewell_capture::channel::get_count() { return MWGetChannelCount(); }
-
-static void assign(magewell_capture::channel::info &lhs, const MWCAP_CHANNEL_INFO &rhs) {
-  lhs.family_id = rhs.wFamilyID;
-  lhs.product_id = rhs.wProductID;
-  lhs.hardware_version = rhs.chHardwareVersion;
-  lhs.firmware_id = rhs.byFirmwareID;
-  lhs.firmware_version = rhs.dwFirmwareVersion;
-  lhs.driver_version = rhs.dwDriverVersion;
-  lhs.family_name = rhs.szFamilyName;
-  lhs.product_name = rhs.szProductName;
-  lhs.firmware_name = rhs.szFirmwareName;
-  lhs.board_serial_no = rhs.szBoardSerialNo;
-  lhs.board_index = rhs.byBoardIndex;
-  lhs.channel_index = rhs.byChannelIndex;
-}
 
 magewell_capture::channel::info magewell_capture::channel::get_info() const {
   // Rely on RVO, return-value optimisation, to avoid copy.
@@ -118,4 +108,19 @@ static void throw_if_not_succeeded(MW_RESULT result, const char *what_function) 
       // defines the preceding ones. But be defensive.
       throw std::runtime_error(std::string(what_function) + " unknown error");
     }
+}
+
+static void assign(magewell_capture::channel::info &lhs, const MWCAP_CHANNEL_INFO &rhs) {
+  lhs.family_id = rhs.wFamilyID;
+  lhs.product_id = rhs.wProductID;
+  lhs.hardware_version = rhs.chHardwareVersion;
+  lhs.firmware_id = rhs.byFirmwareID;
+  lhs.firmware_version = rhs.dwFirmwareVersion;
+  lhs.driver_version = rhs.dwDriverVersion;
+  lhs.family_name = rhs.szFamilyName;
+  lhs.product_name = rhs.szProductName;
+  lhs.firmware_name = rhs.szFirmwareName;
+  lhs.board_serial_no = rhs.szBoardSerialNo;
+  lhs.board_index = rhs.byBoardIndex;
+  lhs.channel_index = rhs.byChannelIndex;
 }
