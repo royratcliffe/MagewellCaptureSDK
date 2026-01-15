@@ -20,6 +20,7 @@ int test_open_channel(int argc, char *argv[]) {
 
     // Open the channel.
     auto opened = channel.open();
+    cout << "  Input source scan: " << opened.get_input_source_scan() << endl;
     cout << "  Opened channel info:" << endl;
 
     auto info = opened.get_info();

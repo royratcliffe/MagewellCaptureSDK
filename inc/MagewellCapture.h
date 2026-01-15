@@ -105,6 +105,10 @@ public:
     //! Gets information about the opened channel.
     //! Throws std::runtime_error on failure.
     info get_info() const;
+
+    //! Gets whether input source is automatically scanned.
+    //! Throws std::runtime_error on failure.
+    bool get_input_source_scan() const;
   };
 
   //! Opens the channel.

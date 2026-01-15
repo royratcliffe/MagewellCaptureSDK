@@ -91,6 +91,12 @@ magewell_capture::channel::info magewell_capture::channel::opened::get_info() co
   return info;
 }
 
+bool magewell_capture::channel::opened::get_input_source_scan() const {
+  BOOL scan = FALSE;
+  handle_result(MWGetInputSourceScan(static_cast<HCHANNEL>(handle_), &scan), "MWGetInputSourceScan");
+  return scan != FALSE;
+}
+
 static void handle_result(MW_RESULT result, const char *what_function) {
   if (result != MW_SUCCEEDED)
     switch (result) {
