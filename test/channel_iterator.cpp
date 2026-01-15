@@ -32,6 +32,7 @@ int test_channel_iterator(int argc, char *argv[]) {
     std::cout << "  Board serial no: " << info.board_serial_no << std::endl;
     std::cout << "  Board index: " << static_cast<int>(info.board_index) << std::endl;
     std::cout << "  Channel index: " << static_cast<int>(info.channel_index) << std::endl;
+    std::cout << "  Device path: " << channel.get_device_path() << std::endl;
   }
 
   return EXIT_SUCCESS;
