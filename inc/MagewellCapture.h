@@ -62,18 +62,18 @@ public:
   //! Information about a capture channel.
   //! Corresponds to MWCAP_CHANNEL_INFO.
   struct info {
-    uint16_t family_id;
-    uint16_t product_id;
-    uint8_t hardware_version;
-    uint8_t firmware_id;
-    uint32_t firmware_version;
-    uint32_t driver_version;
-    std::string family_name;
-    std::string product_name;
-    std::string firmware_name;
-    std::string board_serial_no;
-    uint8_t board_index;
-    uint8_t channel_index;
+    uint16_t family_id;          //!< Family identifier: MWCAP_FAMILY_ID.
+    uint16_t product_id;         //!< Product identifier: MWCAP_PRODUCT_ID.
+    uint8_t hardware_version;    //!< Hardware version.
+    uint8_t firmware_id;         //!< Firmware identifier.
+    uint32_t firmware_version;   //!< Firmware version.
+    uint32_t driver_version;     //!< Driver version.
+    std::string family_name;     //!< Family name.
+    std::string product_name;    //!< Product name.
+    std::string firmware_name;   //!< Firmware name.
+    std::string board_serial_no; //!< Board serial number.
+    uint8_t board_index;         //!< Board index.
+    uint8_t channel_index;       //!< Channel index.
   };
 
   //! Gets information about the channel.
