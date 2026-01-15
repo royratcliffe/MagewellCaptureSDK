@@ -81,6 +81,9 @@ if(DOXYGEN_FOUND)
     set(DOXYGEN_SOURCE_BROWSER YES)
     set(DOXYGEN_EXCLUDE
         ${CMAKE_BINARY_DIR}
+        # Ignore the underlying Magewell SDK header files. Magewell document
+        # them separately.
+        ${CMAKE_SOURCE_DIR}/Include
     )
     doxygen_add_docs(Doxygen ${CMAKE_SOURCE_DIR}
         COMMENT "Generating API documentation with Doxygen"
