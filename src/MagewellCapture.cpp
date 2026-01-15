@@ -49,8 +49,6 @@ magewell_capture::channel::info magewell_capture::channel::get_info() const {
   info info;
   MWCAP_CHANNEL_INFO info_;
   handle_result(MWGetChannelInfoByIndex(index_, &info_), "MWGetChannelInfoByIndex");
-  // Fill in the fields of info from c_info.
-  // Assign string fields directly; they are null-terminated.
   copy(info, info_);
   return info;
 }
@@ -111,6 +109,8 @@ static void handle_result(MW_RESULT result, const char *what_function) {
 }
 
 static void copy(magewell_capture::channel::info &lhs, const MWCAP_CHANNEL_INFO &rhs) {
+  // Fill in the fields of info from the C information structure.
+  // Assign string fields directly; they are null-terminated.
   lhs.family_id = rhs.wFamilyID;
   lhs.product_id = rhs.wProductID;
   lhs.hardware_version = rhs.chHardwareVersion;
