@@ -40,7 +40,10 @@ class channel {
   const int index_;
 
 public:
+  //! Constructs a channel with the given index.
   explicit channel(int index) : index_(index) {}
+
+  //! Returns the index of the channel.
   int index() const { return index_; }
 
   //! Returns the total number of channels.
