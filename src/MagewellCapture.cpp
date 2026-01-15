@@ -16,10 +16,10 @@ using namespace magewell_capture;
 //! \param what_function The name of the function that produced the result.
 static void throw_if_not_succeeded(MW_RESULT result, const char *what_function);
 
-//! Assigns fields of magewell_capture::channel::info from MWCAP_CHANNEL_INFO.
+//! Copies fields of magewell_capture::channel::info from MWCAP_CHANNEL_INFO.
 //! \param lhs The C++ info structure to fill in.
 //! \param rhs The C structure to read from.
-static void assign(magewell_capture::channel::info &lhs, const MWCAP_CHANNEL_INFO &rhs);
+static void copy(magewell_capture::channel::info &lhs, const MWCAP_CHANNEL_INFO &rhs);
 
 uint32_t magewell_capture::get_version() {
   BYTE major = 0, minor = 0;
@@ -51,7 +51,7 @@ magewell_capture::channel::info magewell_capture::channel::get_info() const {
   throw_if_not_succeeded(MWGetChannelInfoByIndex(index_, &info_), "MWGetChannelInfoByIndex");
   // Fill in the fields of info from c_info.
   // Assign string fields directly; they are null-terminated.
-  assign(info, info_);
+  copy(info, info_);
   return info;
 }
 
@@ -89,7 +89,7 @@ magewell_capture::channel::info magewell_capture::channel::opened::get_info() co
   MWCAP_CHANNEL_INFO info_;
   throw_if_not_succeeded(MWGetChannelInfo(static_cast<HCHANNEL>(handle_), &info_), "MWGetChannelInfo");
   info info;
-  assign(info, info_);
+  copy(info, info_);
   return info;
 }
 
@@ -110,7 +110,7 @@ static void throw_if_not_succeeded(MW_RESULT result, const char *what_function) 
     }
 }
 
-static void assign(magewell_capture::channel::info &lhs, const MWCAP_CHANNEL_INFO &rhs) {
+static void copy(magewell_capture::channel::info &lhs, const MWCAP_CHANNEL_INFO &rhs) {
   lhs.family_id = rhs.wFamilyID;
   lhs.product_id = rhs.wProductID;
   lhs.hardware_version = rhs.chHardwareVersion;
