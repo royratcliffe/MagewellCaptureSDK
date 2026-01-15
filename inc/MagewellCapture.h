@@ -96,7 +96,7 @@ public:
     //! Constructs an opened channel from a handle.
     explicit opened(void *handle) : handle_(handle) {}
 
-    friend opened open_channel(const std::string& path);
+    friend opened open_channel(const std::string &path);
 
   public:
     //! Destructor. Closes the channel.
@@ -114,7 +114,7 @@ public:
 
 //! Opens a capture channel by its device path.
 //! Throws std::runtime_error on failure.
-channel::opened open_channel(const std::string& path);
+channel::opened open_channel(const std::string &path);
 
 } // namespace magewell_capture
 
