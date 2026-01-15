@@ -22,8 +22,8 @@ static void throw_if_not_succeeded(MW_RESULT result, const char *what_function);
 static void copy(magewell_capture::channel::info &lhs, const MWCAP_CHANNEL_INFO &rhs);
 
 uint32_t magewell_capture::get_version() {
-  BYTE major = 0, minor = 0;
-  WORD build = 0;
+  BYTE major = 0xff, minor = 0xff;
+  WORD build = 0xffff;
   // At version 3.3.1, the function MWGetVersion is a static inline
   // function defined in MWCapture.h; it always answers MW_SUCCEEDED.
   // Ignore the return value.
