@@ -61,6 +61,15 @@ magewell_capture::channel::info magewell_capture::channel::get_info() const {
   return info;
 }
 
+std::string magewell_capture::channel::get_device_path() const {
+  // Buffer size BUFSIZ should be more than enough. The examples in the
+  // documentation use 128 bytes. Assume that Magewell correctly null terminates
+  // the path.
+  char device_path[BUFSIZ];
+  throw_if_not_succeeded(MWGetDevicePath(index_, device_path), "MWGetDevicePath");
+  return std::string(device_path);
+}
+
 static void throw_if_not_succeeded(MW_RESULT result, const char *what_function) {
   if (result != MW_SUCCEEDED)
     switch (result) {
