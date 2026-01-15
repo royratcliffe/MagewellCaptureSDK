@@ -31,8 +31,8 @@ int test_open_channel(int argc, char *argv[]) {
     cout << "    Product ID: " << info.product_id << endl;
     cout << "    Hardware Version: " << static_cast<int>(info.hardware_version) << endl;
     cout << "    Firmware ID: " << static_cast<int>(info.firmware_id) << endl;
-    cout << "    Firmware Version: " << hex << info.firmware_version << endl;
-    cout << "    Driver Version: " << hex << info.driver_version << endl;
+    cout << "    Firmware Version: " << hex << info.firmware_version << dec << endl;
+    cout << "    Driver Version: " << hex << info.driver_version << dec << endl;
 
     // C++ automatically closes the channel when 'opened' channel goes out of scope.
   }
