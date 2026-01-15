@@ -42,23 +42,22 @@ int magewell_capture::channel::get_count() { return MWGetChannelCount(); }
 magewell_capture::channel::info magewell_capture::channel::get_info() const {
   // Rely on RVO, return-value optimisation, to avoid copy.
   info info;
-  MWCAP_CHANNEL_INFO c_info;
-  throw_if_not_succeeded(MWGetChannelInfoByIndex(index_, &c_info),
-                         "MWGetChannelInfoByIndex");
+  MWCAP_CHANNEL_INFO info_;
+  throw_if_not_succeeded(MWGetChannelInfoByIndex(index_, &info_), "MWGetChannelInfoByIndex");
   // Fill in the fields of info from c_info.
   // Assign string fields directly; they are null-terminated.
-  info.family_id = c_info.wFamilyID;
-  info.product_id = c_info.wProductID;
-  info.hardware_version = c_info.chHardwareVersion;
-  info.firmware_id = c_info.byFirmwareID;
-  info.firmware_version = c_info.dwFirmwareVersion;
-  info.driver_version = c_info.dwDriverVersion;
-  info.family_name = c_info.szFamilyName;
-  info.product_name = c_info.szProductName;
-  info.firmware_name = c_info.szFirmwareName;
-  info.board_serial_no = c_info.szBoardSerialNo;
-  info.board_index = c_info.byBoardIndex;
-  info.channel_index = c_info.byChannelIndex;
+  info.family_id = info_.wFamilyID;
+  info.product_id = info_.wProductID;
+  info.hardware_version = info_.chHardwareVersion;
+  info.firmware_id = info_.byFirmwareID;
+  info.firmware_version = info_.dwFirmwareVersion;
+  info.driver_version = info_.dwDriverVersion;
+  info.family_name = info_.szFamilyName;
+  info.product_name = info_.szProductName;
+  info.firmware_name = info_.szFirmwareName;
+  info.board_serial_no = info_.szBoardSerialNo;
+  info.board_index = info_.byBoardIndex;
+  info.channel_index = info_.byChannelIndex;
   return info;
 }
 
