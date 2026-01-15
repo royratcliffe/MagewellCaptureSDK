@@ -39,6 +39,21 @@ void magewell_capture::refresh_device() { throw_if_not_succeeded(MWRefreshDevice
 
 int magewell_capture::channel::get_count() { return MWGetChannelCount(); }
 
+static void assign(magewell_capture::channel::info &lhs, const MWCAP_CHANNEL_INFO &rhs) {
+  lhs.family_id = rhs.wFamilyID;
+  lhs.product_id = rhs.wProductID;
+  lhs.hardware_version = rhs.chHardwareVersion;
+  lhs.firmware_id = rhs.byFirmwareID;
+  lhs.firmware_version = rhs.dwFirmwareVersion;
+  lhs.driver_version = rhs.dwDriverVersion;
+  lhs.family_name = rhs.szFamilyName;
+  lhs.product_name = rhs.szProductName;
+  lhs.firmware_name = rhs.szFirmwareName;
+  lhs.board_serial_no = rhs.szBoardSerialNo;
+  lhs.board_index = rhs.byBoardIndex;
+  lhs.channel_index = rhs.byChannelIndex;
+}
+
 magewell_capture::channel::info magewell_capture::channel::get_info() const {
   // Rely on RVO, return-value optimisation, to avoid copy.
   info info;
@@ -46,18 +61,7 @@ magewell_capture::channel::info magewell_capture::channel::get_info() const {
   throw_if_not_succeeded(MWGetChannelInfoByIndex(index_, &info_), "MWGetChannelInfoByIndex");
   // Fill in the fields of info from c_info.
   // Assign string fields directly; they are null-terminated.
-  info.family_id = info_.wFamilyID;
-  info.product_id = info_.wProductID;
-  info.hardware_version = info_.chHardwareVersion;
-  info.firmware_id = info_.byFirmwareID;
-  info.firmware_version = info_.dwFirmwareVersion;
-  info.driver_version = info_.dwDriverVersion;
-  info.family_name = info_.szFamilyName;
-  info.product_name = info_.szProductName;
-  info.firmware_name = info_.szFirmwareName;
-  info.board_serial_no = info_.szBoardSerialNo;
-  info.board_index = info_.byBoardIndex;
-  info.channel_index = info_.byChannelIndex;
+  assign(info, info_);
   return info;
 }
 
@@ -68,6 +72,35 @@ std::string magewell_capture::channel::get_device_path() const {
   char device_path[BUFSIZ];
   throw_if_not_succeeded(MWGetDevicePath(index_, device_path), "MWGetDevicePath");
   return std::string(device_path);
+}
+
+magewell_capture::channel::opened magewell_capture::channel::open() const {
+  // Translates the channel index to a handle by getting the device path
+  // first. Get the device path. Open the channel by path.
+  return magewell_capture::open_channel(get_device_path());
+}
+
+magewell_capture::channel::opened magewell_capture::open_channel(const std::string& path) {
+  // Open the channel by path.
+  HCHANNEL handle = MWOpenChannelByPath(path.c_str());
+  if (handle == NULL)
+    throw std::runtime_error("MWOpenChannelByPath failed");
+  return channel::opened(handle);
+}
+
+magewell_capture::channel::opened::~opened() {
+  // Close the channel. The channel handle is stored as a void pointer. There is
+  // no return value to check.
+  MWCloseChannel(static_cast<HCHANNEL>(handle_));
+}
+
+magewell_capture::channel::info magewell_capture::channel::opened::get_info() const {
+  // Get the channel information by handle.
+  MWCAP_CHANNEL_INFO info_;
+  throw_if_not_succeeded(MWGetChannelInfo(static_cast<HCHANNEL>(handle_), &info_), "MWGetChannelInfo");
+  info info;
+  assign(info, info_);
+  return info;
 }
 
 static void throw_if_not_succeeded(MW_RESULT result, const char *what_function) {

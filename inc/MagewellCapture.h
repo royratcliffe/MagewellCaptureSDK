@@ -86,7 +86,35 @@ public:
   //! Gets the device instance path of the channel.
   //! Throws std::runtime_error on failure.
   std::string get_device_path() const;
+
+  //! Represents an opened capture channel.
+  class opened {
+    //! Opaque handle to the opened channel.
+    void *handle_;
+
+  protected:
+    //! Constructs an opened channel from a handle.
+    explicit opened(void *handle) : handle_(handle) {}
+
+    friend opened open_channel(const std::string& path);
+
+  public:
+    //! Destructor. Closes the channel.
+    virtual ~opened();
+
+    //! Gets information about the opened channel.
+    //! Throws std::runtime_error on failure.
+    info get_info() const;
+  };
+
+  //! Opens the channel.
+  //! Throws std::runtime_error on failure.
+  opened open() const;
 };
+
+//! Opens a capture channel by its device path.
+//! Throws std::runtime_error on failure.
+channel::opened open_channel(const std::string& path);
 
 } // namespace magewell_capture
 
