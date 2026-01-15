@@ -23,8 +23,7 @@ uint32_t magewell_capture::get_version() {
   // function defined in MWCapture.h; it always answers MW_SUCCEEDED.
   // Ignore the return value.
   (void)MWGetVersion(&major, &minor, &build);
-  return (static_cast<uint32_t>(major) << 24) |
-         (static_cast<uint32_t>(minor) << 16) | static_cast<uint32_t>(build);
+  return (static_cast<uint32_t>(major) << 24) | (static_cast<uint32_t>(minor) << 16) | static_cast<uint32_t>(build);
 }
 
 void magewell_capture::init_instance() {
@@ -34,9 +33,7 @@ void magewell_capture::init_instance() {
 
 void magewell_capture::exit_instance() { MWCaptureExitInstance(); }
 
-void magewell_capture::refresh_device() {
-  throw_if_not_succeeded(MWRefreshDevice(), "MWRefreshDevice");
-}
+void magewell_capture::refresh_device() { throw_if_not_succeeded(MWRefreshDevice(), "MWRefreshDevice"); }
 
 int magewell_capture::channel::get_count() { return MWGetChannelCount(); }
 
@@ -63,8 +60,7 @@ magewell_capture::channel::info magewell_capture::channel::get_info() const {
   return info;
 }
 
-static void throw_if_not_succeeded(MW_RESULT result,
-                                   const char *what_function) {
+static void throw_if_not_succeeded(MW_RESULT result, const char *what_function) {
   if (result != MW_SUCCEEDED)
     switch (result) {
     case MW_FAILED:
