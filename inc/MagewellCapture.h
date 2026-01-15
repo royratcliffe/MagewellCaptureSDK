@@ -79,6 +79,10 @@ public:
   //! Gets information about the channel.
   //! Throws std::runtime_error on failure.
   info get_info() const;
+
+  //! Gets the device instance path of the channel.
+  //! Throws std::runtime_error on failure.
+  std::string get_device_path() const;
 };
 
 } // namespace magewell_capture
