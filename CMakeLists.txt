@@ -49,13 +49,13 @@ create_test_sourcelist(magewell_capture_tests
     test/refresh_device.cpp
     test/channel_iterator.cpp
 )
-add_executable(test_driver ${magewell_capture_tests})
-target_link_libraries(test_driver PRIVATE MagewellCapture)
-add_test(NAME get_version COMMAND test_driver test/get_version)
-add_test(NAME init_instance COMMAND test_driver test/init_instance)
-add_test(NAME exit_instance COMMAND test_driver test/exit_instance)
-add_test(NAME refresh_device COMMAND test_driver test/refresh_device)
-add_test(NAME channel_iterator COMMAND test_driver test/channel_iterator)
+add_executable(TestDriver ${magewell_capture_tests})
+target_link_libraries(TestDriver PRIVATE MagewellCapture)
+add_test(NAME get_version COMMAND TestDriver test/get_version)
+add_test(NAME init_instance COMMAND TestDriver test/init_instance)
+add_test(NAME exit_instance COMMAND TestDriver test/exit_instance)
+add_test(NAME refresh_device COMMAND TestDriver test/refresh_device)
+add_test(NAME channel_iterator COMMAND TestDriver test/channel_iterator)
 
 # Installation rules.
 # Install header files.
@@ -69,3 +69,19 @@ install(TARGETS MagewellCapture
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
 )
+
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+    set(DOXYGEN_USE_MATHJAX YES)
+    set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md)
+    set(DOXYGEN_IMAGE_PATH ${CMAKE_SOURCE_DIR}/images)
+    set(DOXYGEN_EXTRACT_STATIC YES)
+    set(DOXYGEN_SOURCE_BROWSER YES)
+    set(DOXYGEN_EXCLUDE
+        ${CMAKE_BINARY_DIR}
+    )
+    doxygen_add_docs(Doxygen ${CMAKE_SOURCE_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        ALL
+    )
+endif()
