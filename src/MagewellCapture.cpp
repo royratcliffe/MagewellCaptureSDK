@@ -70,7 +70,7 @@ magewell_capture::channel::opened magewell_capture::channel::open() const {
   return magewell_capture::open_channel(get_device_path());
 }
 
-magewell_capture::channel::opened magewell_capture::open_channel(const std::string& path) {
+magewell_capture::channel::opened magewell_capture::open_channel(const std::string &path) {
   // Open the channel by path.
   HCHANNEL handle = MWOpenChannelByPath(path.c_str());
   if (handle == NULL)
