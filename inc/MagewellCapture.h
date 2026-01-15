@@ -21,7 +21,7 @@ uint32_t get_version();
 
 //! Initialises a Magewell Capture instance.
 //! Invoke this at the start of the program. It works idempotently; calling it
-//! multiple times has no additional effect.
+//! multiple times has no additional effect. Starts up a device-monitoring thread.
 //! Throws std::runtime_error if initialisation fails.
 void init_instance();
 

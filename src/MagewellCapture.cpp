@@ -27,6 +27,8 @@ uint32_t magewell_capture::get_version() {
 }
 
 void magewell_capture::init_instance() {
+  // Call MWCaptureInitInstance; throw if it fails. It returns FALSE on failure;
+  // does not use a result code.
   if (MWCaptureInitInstance() == FALSE)
     throw std::runtime_error("MWCaptureInitInstance failed");
 }
